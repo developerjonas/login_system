@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
         $user = mysqli_fetch_assoc($result);
 
         // Verify the password
-        if ($password == $user['password']) {
+        if (password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['username'] = $username;
             header('Location: welcome.php');

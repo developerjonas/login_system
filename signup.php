@@ -5,13 +5,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name']) && isset($_POS
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['pass'];
-
-    $insert = "INSERT INTO   `users` (`name`, `email`, `username`, `password`) VALUES ('$name', '$email', '$username', '$password')";
+    $hash = password_hash($password, PASSWORD_BCRYPT);
+    $insert = "INSERT INTO   `users` (`name`, `email`, `username`, `password`) VALUES ('$name', '$email', '$username', '$hash')";
     $result = mysqli_query($conn, $insert);
 
     if (!$result) {
         echo "<script>alert('The data wasn't inserted for some reasons')</script>";
         die(mysqli_error($conn));
+    } else {
+        // Redirect to welcome page after successful signup
+        session_start();
+        $_SESSION['username'] = $username;
+        header('Location: welcome.php');
+        exit();
     }
 }
 ?>
