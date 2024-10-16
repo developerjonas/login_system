@@ -1,3 +1,20 @@
+<?php
+require 'db.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pass'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $password = $_POST['pass'];
+
+    $insert = "INSERT INTO   `users` (`name`, `email`, `username`, `password`) VALUES ('$name', '$email', '$username', '$password')";
+    $result = mysqli_query($conn, $insert);
+
+    if (!$result) {
+        echo "<script>alert('The data wasn't inserted for some reasons')</script>";
+        die(mysqli_error($conn));
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,12 +31,12 @@
     <div class="container">
         <div class="form-container">
             <h2>Signup</h2>
-            <form action="#" method="POST" class="signup-form">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Confirm Password" required>
+            <form action="signup.php" method="POST" class="signup-form">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" require>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="pass" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
                 <p>Already have an account? <a href="login.php">Log in</a></p>
             </form>
@@ -29,3 +46,6 @@
     <script src="script.js"></script>
 
 </html>
+<?php
+require 'db.php';
+?>
