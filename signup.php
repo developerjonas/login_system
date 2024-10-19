@@ -1,4 +1,5 @@
 <?php
+// here it is assumed that you have already created a user database table name `users`
 require 'db.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pass'])) {
     $name = $_POST['name'];
